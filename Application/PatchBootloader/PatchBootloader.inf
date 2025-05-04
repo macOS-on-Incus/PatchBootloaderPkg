@@ -1,0 +1,30 @@
+[Defines]
+INF_VERSION = 1.27
+BASE_NAME = PatchBootloader
+FILE_GUID = 8EBBC671-8820-4713-A8FD-A27948E4D8F0
+MODULE_TYPE = UEFI_APPLICATION
+VERSION_STRING = 0.1
+ENTRY_POINT = UefiMain
+
+[Sources]
+Copy.c
+Logo.c
+PatchBootloader.c
+Print.c
+
+[Packages]
+MdePkg/MdePkg.dec
+
+[Guids]
+gEfiFileInfoGuid
+gEfiGlobalVariableGuid
+gEfiPartTypeSystemPartGuid
+
+[Protocols]
+gEfiBlockIoProtocolGuid
+gEfiLoadedImageProtocolGuid
+gEfiPartitionInfoProtocolGuid
+
+[LibraryClasses]
+UefiApplicationEntryPoint
+UefiLib

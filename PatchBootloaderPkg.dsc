@@ -1,0 +1,31 @@
+[Defines]
+DSC_SPECIFICATION = 1.28
+PLATFORM_GUID = B0394F98-B4DC-46B9-BDE2-C7EB054C6C5B
+PLATFORM_VERSION = 0.1
+PLATFORM_NAME = PatchBootloaderPkg
+SUPPORTED_ARCHITECTURES = X64
+BUILD_TARGETS = DEBUG|RELEASE|NOOPT
+
+[LibraryClasses]
+BaseLib|MdePkg/Library/BaseLib/BaseLib.inf
+BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
+DebugLib|MdePkg/Library/BaseDebugLibSerialPort/BaseDebugLibSerialPort.inf
+DebugPrintErrorLevelLib|MdePkg/Library/BaseDebugPrintErrorLevelLib/BaseDebugPrintErrorLevelLib.inf
+DevicePathLib|MdePkg/Library/UefiDevicePathLib/UefiDevicePathLib.inf
+IoLib|MdePkg/Library/BaseIoLibIntrinsic/BaseIoLibIntrinsic.inf
+MemoryAllocationLib|MdePkg/Library/UefiMemoryAllocationLib/UefiMemoryAllocationLib.inf
+PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
+PciExpressLib|MdePkg/Library/BasePciExpressLib/BasePciExpressLib.inf
+PciLib|MdePkg/Library/BasePciLibPciExpress/BasePciLibPciExpress.inf
+PlatformHookLib|MdeModulePkg/Library/BasePlatformHookLibNull/BasePlatformHookLibNull.inf
+PrintLib|MdePkg/Library/BasePrintLib/BasePrintLib.inf
+RegisterFilterLib|MdePkg/Library/RegisterFilterLibNull/RegisterFilterLibNull.inf
+SerialPortLib|MdeModulePkg/Library/BaseSerialPortLib16550/BaseSerialPortLib16550.inf
+StackCheckLib|MdePkg/Library/StackCheckLibNull/StackCheckLibNull.inf
+UefiApplicationEntryPoint|MdePkg/Library/UefiApplicationEntryPoint/UefiApplicationEntryPoint.inf
+UefiBootServicesTableLib|MdePkg/Library/UefiBootServicesTableLib/UefiBootServicesTableLib.inf
+UefiLib|MdePkg/Library/UefiLib/UefiLib.inf
+UefiRuntimeServicesTableLib|MdePkg/Library/UefiRuntimeServicesTableLib/UefiRuntimeServicesTableLib.inf
+
+[Components]
+PatchBootloaderPkg/Application/PatchBootloader/PatchBootloader.inf
