@@ -21,7 +21,19 @@ EFI_STATUS CopyFile(IN EFI_FILE_PROTOCOL *SrcDir, IN EFI_FILE_PROTOCOL *DstDir, 
 	);
 	if (EFI_ERROR(Status)) return Status;
 
-	// Create (or overwrite) destination file
+	// Try to delete destination file
+	Status = DstDir->Open(
+		DstDir,
+		&DstFile,
+		FileName,
+		EFI_FILE_MODE_READ | EFI_FILE_MODE_WRITE,
+		0
+	);
+	if (!EFI_ERROR(Status)) {
+		DstFile->Delete(DstFile);
+	}
+
+	// Create destination file
 	Status = DstDir->Open(
 		DstDir,
 		&DstFile,
