@@ -9,11 +9,13 @@ BUILD_TARGETS = DEBUG|RELEASE|NOOPT
 [LibraryClasses]
 BaseLib|MdePkg/Library/BaseLib/BaseLib.inf
 BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
+CommonMemoryAllocationLib|MdeModulePkg/Library/CommonMemoryAllocationLib/CommonMemoryAllocationLib.inf
 DebugLib|MdePkg/Library/BaseDebugLibSerialPort/BaseDebugLibSerialPort.inf
 DebugPrintErrorLevelLib|MdePkg/Library/BaseDebugPrintErrorLevelLib/BaseDebugPrintErrorLevelLib.inf
 DevicePathLib|MdePkg/Library/UefiDevicePathLib/UefiDevicePathLib.inf
 IoLib|MdePkg/Library/BaseIoLibIntrinsic/BaseIoLibIntrinsic.inf
 MemoryAllocationLib|MdePkg/Library/UefiMemoryAllocationLib/UefiMemoryAllocationLib.inf
+MemoryProfileLib|MdeModulePkg/Library/BaseMemoryProfileLibNull/BaseMemoryProfileLibNull.inf
 PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
 PciExpressLib|MdePkg/Library/BasePciExpressLib/BasePciExpressLib.inf
 PciLib|MdePkg/Library/BasePciLibPciExpress/BasePciLibPciExpress.inf
