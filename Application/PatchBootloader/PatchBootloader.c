@@ -23,7 +23,7 @@ typedef struct {
 } DISK_ENTRY;
 
 // Find the first disk that contains an EFI partition followed by an APFS partition
-EFI_STATUS FindMacOSEFI (OUT EFI_HANDLE *EfiPartHandle) {
+EFI_STATUS FindMacOSEFI(OUT EFI_HANDLE *EfiPartHandle) {
 	DISK_ENTRY Disks[MAX_DISKS];
 	EFI_HANDLE *Handles;
 	EFI_STATUS Status;

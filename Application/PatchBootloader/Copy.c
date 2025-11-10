@@ -140,8 +140,8 @@ EFI_STATUS CopyDirectoryRecursive(IN EFI_FILE_PROTOCOL *SrcDir, IN EFI_FILE_PROT
 	gBS->FreePool(FileInfo);
 
 	// Treat EOF as OK
-	if (Status == EFI_END_OF_FILE)
-		return EFI_SUCCESS;
+	if (Status == EFI_END_OF_FILE) return EFI_SUCCESS;
+
 	return Status;
 }
 

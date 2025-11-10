@@ -46,9 +46,7 @@ EFI_STATUS LoadBmpToBlt(IN EFI_FILE_PROTOCOL *Root, IN CHAR16 *FileName, OUT EFI
 		EFI_FILE_MODE_READ,
 		0
 	);
-	if (EFI_ERROR(Status)) {
-		return Status;
-	}
+	if (EFI_ERROR(Status)) return Status;
 
 	// Get file size
 	InfoSize = SIZE_OF_EFI_FILE_INFO + 256 * sizeof(CHAR16);
