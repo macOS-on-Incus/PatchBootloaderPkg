@@ -22,6 +22,7 @@ gEfiPartTypeSystemPartGuid
 
 [Protocols]
 gEfiBlockIoProtocolGuid
+gEfiExtScsiPassThruProtocolGuid
 gEfiLoadedImageProtocolGuid
 gEfiPartitionInfoProtocolGuid
 

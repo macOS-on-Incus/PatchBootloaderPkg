@@ -6,6 +6,7 @@
 #include <Protocol/BlockIo.h>
 #include <Protocol/LoadedImage.h>
 #include <Protocol/PartitionInfo.h>
+#include <Protocol/ScsiPassThruExt.h>
 #include "Copy.h"
 #include "Logo.h"
 #include "Print.h"
@@ -105,17 +106,58 @@ EFI_STATUS FindMacOSEFI (OUT EFI_HANDLE *EfiPartHandle) {
 // Eject the CD
 EFI_STATUS EjectCd(IN EFI_HANDLE CdHandle) {
 	EFI_STATUS Status;
-	EFI_BLOCK_IO_PROTOCOL *BlkIo;
+	EFI_DEVICE_PATH_PROTOCOL *Dp;
+	EFI_HANDLE ScsiHandle;
+	EFI_EXT_SCSI_PASS_THRU_PROTOCOL *ScsiPt;
+	UINT8 *Target;
+	UINT64 Lun;
+	EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET Pkt;
+	UINT8 SenseData[32];
 
+	// Get device path
 	Status = gBS->HandleProtocol(
 		CdHandle,
-		&gEfiBlockIoProtocolGuid,
-		(VOID**)&BlkIo
+		&gEfiDevicePathProtocolGuid,
+		(VOID**)&Dp
 	);
-	if (!EFI_ERROR(Status) && BlkIo->Media->RemovableMedia) {
-		BlkIo->Reset(BlkIo, TRUE);
-	}
+	if (EFI_ERROR(Status)) return Status;
 
+	// Get SCSI handle
+	Status = gBS->LocateDevicePath(
+		&gEfiExtScsiPassThruProtocolGuid,
+		&Dp,
+		&ScsiHandle
+	);
+	if (EFI_ERROR(Status)) return Status;
+
+	Status = gBS->HandleProtocol(
+		ScsiHandle,
+		&gEfiExtScsiPassThruProtocolGuid,
+		(VOID**)&ScsiPt
+	);
+	if (EFI_ERROR(Status)) return Status;
+
+	// Translate device path node
+	Status = ScsiPt->GetTargetLun(ScsiPt, Dp, &Target, &Lun);
+	if (EFI_ERROR(Status)) return Status;
+
+	// Build packet
+	ZeroMem(&Pkt, sizeof(Pkt));
+	Pkt.SenseData = SenseData;
+	Pkt.SenseDataLength = sizeof(SenseData);
+	Pkt.Timeout = EFI_TIMER_PERIOD_SECONDS(3);
+
+	// Send ALLOW_MEDIUM_REMOVAL
+	UINT8 Cdb[6] = { 0x1E, 0x00, 0x00, 0x00, 0x00, 0x00 };
+	Pkt.Cdb = Cdb;
+	Pkt.CdbLength = sizeof(Cdb);
+	Status = ScsiPt->PassThru(ScsiPt, Target, Lun, &Pkt, NULL);
+	if (EFI_ERROR(Status)) return Status;
+
+	// Send START_STOP with LoEj
+	Cdb[0] = 0x1B;
+	Cdb[4] = 0x02;
+	Status = ScsiPt->PassThru(ScsiPt, Target, Lun, &Pkt, NULL);
 	return Status;
 }
 
