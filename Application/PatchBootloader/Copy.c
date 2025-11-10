@@ -183,7 +183,6 @@ EFI_STATUS CopyStage2(EFI_FILE_PROTOCOL *SrcRoot, IN EFI_HANDLE EfiPart) {
 	);
 
 	SrcDir->Close(SrcDir);
-	SrcRoot->Close(SrcRoot);
 	DstRoot->Close(DstRoot);
 
 	return Status;

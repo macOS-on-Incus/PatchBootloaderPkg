@@ -146,6 +146,13 @@ EFI_STATUS ChainLoad(IN EFI_HANDLE PartHandle) {
 	return gBS->StartImage(Image, NULL, NULL);
 }
 
+VOID CloseVolume(IN EFI_FILE_PROTOCOL *Volume) {
+	EFI_STATUS Status = Volume->Close(Volume);
+	if (EFI_ERROR(Status)) {
+		PrintStatusR(L"Unable to close root directory: %r", Status);
+	}
+}
+
 EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable) {
 	EFI_FILE_PROTOCOL *Root;
 	EFI_HANDLE EfiPart;
@@ -180,6 +187,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
 	Status = FindMacOSEFI(&EfiPart);
 	if (EFI_ERROR(Status)) {
 		PrintStatusR(L"No suitable disk found: %r", Status);
+		CloseVolume(Root);
 		return ChainLoad(LoadedImage->DeviceHandle);
 	}
 
@@ -187,8 +195,11 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
 	Status = CopyStage2(Root, EfiPart);
 	if (EFI_ERROR(Status)) {
 		PrintStatusR(L"Failed to install Stage-2 bootloader: %r", Status);
+		CloseVolume(Root);
 		return ChainLoad(LoadedImage->DeviceHandle);
 	}
+
+	CloseVolume(Root);
 
 	PrintStatus(L"Ejecting installation drive...");
 	Status = EjectCd(LoadedImage->DeviceHandle);
