@@ -1,0 +1,28 @@
+[Defines]
+INF_VERSION = 1.27
+BASE_NAME = Stage2
+FILE_GUID = 38E46080-1F73-4A6E-BC17-CBCE6A3027D3
+MODULE_TYPE = UEFI_APPLICATION
+VERSION_STRING = 0.1
+ENTRY_POINT = UefiMain
+
+[Sources]
+Boot.c
+Logo.c
+Print.c
+Util.c
+
+[Packages]
+MdePkg/MdePkg.dec
+
+[Guids]
+gEfiFileInfoGuid
+
+[Protocols]
+gEfiExtScsiPassThruProtocolGuid
+gEfiLoadedImageProtocolGuid
+gEfiScsiIoProtocolGuid
+
+[LibraryClasses]
+UefiApplicationEntryPoint
+UefiLib

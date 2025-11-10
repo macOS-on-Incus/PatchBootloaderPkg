@@ -30,4 +30,5 @@ UefiLib|MdePkg/Library/UefiLib/UefiLib.inf
 UefiRuntimeServicesTableLib|MdePkg/Library/UefiRuntimeServicesTableLib/UefiRuntimeServicesTableLib.inf
 
 [Components]
-PatchBootloaderPkg/Application/PatchBootloader/PatchBootloader.inf
+PatchBootloaderPkg/Application/PatchBootloader/Stage1.inf
+PatchBootloaderPkg/Application/PatchBootloader/Stage2.inf

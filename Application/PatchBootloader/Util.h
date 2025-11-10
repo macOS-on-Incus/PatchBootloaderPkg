@@ -1,0 +1,2 @@
+EFI_STATUS ChainLoad(IN EFI_HANDLE PartHandle, IN CHAR16 *Path);
+VOID CloseVolume(IN EFI_FILE_PROTOCOL *Volume);
